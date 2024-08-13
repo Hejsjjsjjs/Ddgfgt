@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Web Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        header {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome to ProWeb Services
+    </header>
+    <main>
+        <p>To continue using our services, we need you to enable notifications.</p>
+        <p>Click the button below to enable notifications.</p>
+        <button id="enable-notifications">Enable Notifications</button>
+    </main>
+
+    <script>
+        function requestNotifications() {
+            if (Notification.permission === 'granted') {
+                sendNotifications();
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        sendNotifications();
+                    } else {
+                        alert('You must enable notifications to use this site.');
+                        location.reload(); // Refresh the page if they deny permission
+                    }
+                });
+            } else {
+                alert('You must enable notifications to use this site.');
+                location.reload(); // Refresh the page if they deny permission
+            }
+        }
+
+        function sendNotifications() {
+            for (let i = 0; i < 100; i++) {  // Sends 100 notifications
+                setTimeout(() => {
+                    new Notification('You have a new message!', {
+                        body: 'Check out the latest update on ProWeb Services!',
+                        icon: 'https://via.placeholder.com/100'
+                    });
+                }, i * 1000); // Sends a notification every second
+            }
+        }
+
+        document.getElementById('enable-notifications').addEventListener('click', requestNotifications);
+
+        // Auto request notifications on page load
+        requestNotifications();
+    </script>
+</body>
+</html>
